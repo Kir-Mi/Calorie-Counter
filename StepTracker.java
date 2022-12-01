@@ -1,10 +1,10 @@
 public class StepTracker {
 
 
-    int stepAim = 10000;
-    int[][] stepData = new int[12][30];
+    static int stepAim = 10000;
+    static int[][] stepData = new int[12][30];
 
-    public void saveSteps(int month, int day, int stepsPerDay) {  // Сохранить шаги
+    static void saveSteps(int month, int day, int stepsPerDay) {  // Сохранить шаги
         if (month<0 || month>11) {
             System.out.println("Неверный индекс месяца");
         } else if (day<0 || day>29) {
@@ -17,51 +17,58 @@ public class StepTracker {
         }
     }
 
-    public void printStepsByDays (int month) { // Печатаем количество шагов по дням
+    static void printStepsByDays (int month) { // Печатаем количество шагов по дням
+        System.out.print("Пройдено шагов:");
         for (int j=0; j<30; j++) {
-            System.out.print("Пройдено шагов:");
-            System.out.print(" " + (j+1) + " день: " + stepData[month][j]);
+            System.out.print(" " + (j+1) + " день: " + stepData[month][j] + ".");
         }
+        System.out.println();
     }
 
-    void printSumSteps (int month) {  // Печатаем сумму шагов за месяц
-
+    static void printSumAverageKkalDist (int month) {  // Печатаем сумму, среднее за месяц, дистанцию и калории
+        int sumSteps = 0;
+        for (int j=0; j<30; j++) {
+            sumSteps = sumSteps + stepData[month][j];
+        }
+        System.out.println("Количество шагов за месяц: " + sumSteps);
+        System.out.println("Среднее количество шагов за месяц: " + (sumSteps/30));
+        System.out.println("Пройдено за месяц: " + Converter.findDistance(sumSteps) + " км.");
+        System.out.println("Потрачено за месяц: " + Converter.countCalories(sumSteps) + " Ккал.");
     }
 
-
-    void printMax (int month) { // Печатаем максимальное кол-во шагов за месяц
-
+    static void printMax (int month) { // Печатаем максимальное кол-во шагов за месяц
+        int maxSteps = 0;
+        for (int j=0; j<30; j++) {
+            if (maxSteps<stepData[month][j]) {
+                maxSteps = stepData[month][j];
+            }
+        }
+        System.out.println("Максимальное число шагов за месяц: " + maxSteps);
     }
 
-
-    void printAverage (int month) { // Печатаем среднее кол-во шагов за месяц
-
+    static void printBestSeries (int month) { // Печатаем лучшую серию
+        int preBestSeries =0;
+        int bestSeries = 0;
+        for (int j=0; j<30; j++) {
+            if (stepData[month][j]<stepAim) {
+                preBestSeries = 0;
+            } else {
+                preBestSeries = preBestSeries + 1;
+                if (bestSeries<preBestSeries) {
+                    bestSeries = preBestSeries;
+                }
+            }
+        }
+        System.out.println("Лучшая серия выполнения цели: " + bestSeries + " дней");
     }
 
-
-    void printDistance (int month) { // Печатаем дистанцию за мес. в км.
-
-    }
-
-    void printCalories (int month) { // Печатаем расход Ккал за мес.
-
-    }
-
-    void printBestSeries (int month) { // Печатаем лучшую серию
-
-    }
-
-
-
-
-
-    int  changeAim(int stepsToDay) {  // метод изменяет цель на день
+    static int  changeAim(int stepsToDay) {  // метод изменяет цель на день
         if (stepsToDay >= 0) {
-            stepAim = stepAim + stepsToDay;
+            stepAim = stepsToDay;
             System.out.println("Новая цель на день: " + stepAim + " шагов.");
         } else {
             System.out.println("Количество шагов не может быть отрицательным");
-            System.out.println("Цель осталась прежней: "+stepAim+" шагов.");
+            System.out.println("Цель осталась прежней: " + stepAim + " шагов.");
         } return stepAim;
     }
 }

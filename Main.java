@@ -19,9 +19,10 @@ public class Main {
                 System.out.println("За какой месяц показать статистику?");
                 System.out.println("Введите индекс месяца: 0 - янв., 1 - фев. и т.д.");
                 int month = scanner.nextInt();
-
-
-
+                StepTracker.printStepsByDays(month);
+                StepTracker.printSumAverageKkalDist(month);
+                StepTracker.printMax(month);
+                StepTracker.printBestSeries(month);
             } else if (userInput==3) {  // изменить цель
                 System.out.println("Введите новуюю ежедневную цель");
                 int stepsAim = scanner.nextInt();
